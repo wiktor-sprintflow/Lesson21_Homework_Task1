@@ -27,19 +27,24 @@ public class ConvertLengthServlet extends HttpServlet {
             if (countNonEmptyInputs(formData) != 1) {
                 writer.println("<h3>Należy wypełnić tylko jedno pole</h3>");
             } else {
-                if (!request.getParameter("meters").equals("")) {
-                    double meters = Double.parseDouble(request.getParameter("meters"));
+
+                String metersFromRequest = request.getParameter("meters");
+                String centimetersFromRequest = request.getParameter("centimeters");
+                String millimetersFromRequest = request.getParameter("millimeters");
+
+                if (!metersFromRequest.equals("")) {
+                    double meters = Double.parseDouble(metersFromRequest);
                     showConvertedValues(writer, meters, meters * 100, meters * 1000);
-                } else if (!request.getParameter("centimeters").equals("")) {
-                    double centimeters = Double.parseDouble(request.getParameter("centimeters"));
+                } else if (!centimetersFromRequest.equals("")) {
+                    double centimeters = Double.parseDouble(centimetersFromRequest);
                     showConvertedValues(writer, centimeters / 100, centimeters, centimeters * 10);
                 } else {
-                    double millimeters = Double.parseDouble(request.getParameter("millimeters"));
+                    double millimeters = Double.parseDouble(millimetersFromRequest);
                     showConvertedValues(writer, millimeters / 1000, millimeters / 10, millimeters);
                 }
             }
         } catch (NumberFormatException e) {
-            writer.println("<h3>Wprowadzane dane muszą być liczbowe.</h3?>");
+            writer.println("<h3>Wprowadzane dane muszą być liczbowe.</h3>");
         }
     }
 

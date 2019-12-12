@@ -25,19 +25,23 @@ public class ConvertWeightServlet extends HttpServlet {
             if (countNonEmptyInputs(formData) != 1) {
                 writer.println("<h3>Należy wypełnić tylko jedno pole</h3>");
             } else {
-                if (!request.getParameter("kilograms").equals("")) {
-                    double kilograms = Double.parseDouble(request.getParameter("kilograms"));
+                String kilogramsFromParameter = request.getParameter("kilograms");
+                String gramsFromParameter = request.getParameter("grams");
+                String milligramsFromParameter = request.getParameter("milligrams");
+
+                if (!kilogramsFromParameter.equals("")) {
+                    double kilograms = Double.parseDouble(kilogramsFromParameter);
                     showConvertedValues(writer, kilograms, kilograms * 1000, kilograms * 1000000);
-                } else if (!request.getParameter("grams").equals("")) {
-                    double grams = Double.parseDouble(request.getParameter("grams"));
+                } else if (!gramsFromParameter.equals("")) {
+                    double grams = Double.parseDouble(gramsFromParameter);
                     showConvertedValues(writer, grams / 1000, grams, grams * 1000);
                 } else {
-                    double milligrams = Double.parseDouble(request.getParameter("milligrams"));
+                    double milligrams = Double.parseDouble(milligramsFromParameter);
                     showConvertedValues(writer, milligrams / 1000000, milligrams / 1000, milligrams);
                 }
             }
         } catch (NumberFormatException e) {
-            writer.println("<h3>Wprowadzane dane muszą być liczbowe.</h3?>");
+            writer.println("<h3>Wprowadzane dane muszą być liczbowe.</h3>");
         }
     }
 
